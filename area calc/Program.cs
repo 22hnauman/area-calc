@@ -41,11 +41,21 @@ namespace area_calc
             else if(index == 3) { return val3 * (val1 + val2) * 0.5; }
             else { return 0.0; }
         }
+        static float ReadFloat(string prompt)
+        {
+            float result;
+            Console.Write(prompt);
+            while (!float.TryParse(Console.ReadLine(), out result))
+            {
+                Console.Write("Invalid input. Please enter a valid number: ");
+            }
+            return result;
+        }
         static void Main(string[] args)
         {
-            string[] list = {"1. Circle", "2. Rectangle",
-                "3. Triangle", "4. Trapezoid",
-                "5. Paralellogram", "6. Sqaure", "7. Ellipse", "X. Exit"};
+            string[] list = {"Circle", "Rectangle",
+                "Triangle", "Trapezoid",
+                "Paralellogram", "Sqaure", "Ellipse", "X. Exit"};
             bool menu = true; int index = 0;
             writemenu(list, index);
             while (menu)
@@ -64,13 +74,27 @@ namespace area_calc
                     menu = false;
                 }
             }
-            float[] values = new float [3];
-            for (int i = 0; i < 3; i++)
+            float val1 = 0, val2 = 0, val3 = 0;
+            if (index == 0)
             {
-                Console.WriteLine("Enter val" + (i+1) + " (values outside of formula for shapes will be ignored)");
-                values[i] = float.Parse(Console.ReadLine());
+                val1 = ReadFloat("Enter radius: ");
             }
-            Console.WriteLine($"Area of {list[index]}: " + areacalc(index, values[0], values[1], values[2]) + "units");
+            else if (index == 5)
+            {
+                val1 = ReadFloat("Enter side length: ");
+            }
+            else if (index == 3)
+            {
+                val1 = ReadFloat("Enter base a: ");
+                val2 = ReadFloat("Enter base b: ");
+                val3 = ReadFloat("Enter height: ");
+            }
+            else
+            {
+                val1 = ReadFloat("Enter first dimension: ");
+                val2 = ReadFloat("Enter second dimension: ");
+            }
+            Console.WriteLine($"Area of {list[index]}: " + areacalc(index, val1, val2, val3) + " units");
         }
     }
 }
